@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<link rel="stylesheet"
+		href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
+	<script src="https://kit.fontawesome.com/a13b43d1ab.js" crossorigin="anonymous"></script>
+
+	<title>Wordle</title>
+	<style>
+		* {
+			margin: 0px;
+			padding: 0px;
+		}
+
+		.container {
+			width: 505px;
+			height: 625px;
+			border: 2px solid black;
+			box-shadow: inset 5px 5px 15px rgba(0, 0, 0, 0.3);
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			transform: translate(-50%, -50%);
+
+		}
+
+		.container.display {
+			opacity: 0.6;
+			background-color: #aeb7c6;
+		}
+
+
+
+		.result {
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			background-color: rgb(178, 236, 195);
+			opacity: 0.45;
+			width: 400px;
+			height: 150px;
+			border-radius: 10px;
+			transform: translate(-50%, -50%) scale(0);
+			transition: transform 0.5s ease;
+			font-family: monospace;
+			font-weight: bolder;
+
+		}
+
+		.header {
+			display: flex;
+			align-items: center;
+			justify-content: space-around;
+			width: 100%;
+			height: 15%;
+		}
+
+		.template {
+			width: 100%;
+			height: 65%;
+			display: flex;
+			justify-content: center;
+
+			display: grid;
+			grid-template-columns: 60px 60px 60px 60px 60px;
+			grid-template-rows: 60px 60px 60px 60px 60px;
+			grid-gap: 5px;
+		}
+
+		.template div {
+			border-radius: 2px;
+			box-shadow: inset 3px 3px 5px rgba(0, 0, 0, 0.3);
+			text-align: center;
+			display: grid;
+			place-items: center;
+			font-family: "Clear Sans", "Helvetica Neue", Arial, sans-serif;
+			font-weight: bold;
+		}
+
+		.template .present div {
+			background-color: rgb(193, 193, 28);
+		}
+
+		.template .correct div {
+			background-color: rgb(88, 212, 88);
+		}
+
+		.keyboard {
+			width: 95%;
+			height: 200px;
+			margin: 5px;
+
+			margin-bottom: 20px;
+			position: relative;
+			top: -68px;
+			margin-left: 9px;
+		}
+
+		.keyboard button {
+			width: 40px;
+			height: 40px;
+			border-radius: 4px;
+			margin-right: 3px;
+			margin-bottom: 8px;
+			border: none;
+		}
+
+		.keyboard .rowf {
+			display: grid;
+			grid-template-columns: repeat(10, 49px);
+		}
+
+		.keyboard .rows {
+			display: grid;
+			grid-template-columns: repeat(9, 55px);
+		}
+
+		.keyboard .rowt {
+			display: grid;
+			grid-template-columns: 80px 45px 45px 45px 45px 45px 45px 45px 80px;
+		}
+
+		.keyboard .del {
+			width: 75px;
+		}
+
+		.keyboard .enter {
+			width: 85px;
+		}
+
+		.result {
+			display: flex;
+			justify-content: center;
+			align-items: center;
+		}
+	</style>
+</head>
+
+<body class="">
+	<div class="container">
+		<div class="header">
+			<div class="instructions">
+				<i class="fa-solid fa-question" style="color: #aeb7c6"></i>
+			</div>
+			<h1 class="title">Wordle</h1>
+			<div class="settings">
+				<i class="fa-solid fa-gear" style="color: #dadfe7"></i>
+			</div>
+		</div>
+
+		<div class="template">
+			<div class="item-1"></div>
+			<div class="item-2"></div>
+			<div class="item-3"></div>
+			<div class="item-4"></div>
+			<div class="item-5"></div>
+
+			<div class="item-6"></div>
+			<div class="item-7"></div>
+			<div class="item-8"></div>
+			<div class="item-9"></div>
+			<div class="item-10"></div>
+
+			<div class="item-11"></div>
+			<div class="item-12"></div>
+			<div class="item-13"></div>
+			<div class="item-14"></div>
+			<div class="item-15"></div>
+
+			<div class="item-16"></div>
+			<div class="item-17"></div>
+			<div class="item-18"></div>
+			<div class="item-19"></div>
+			<div class="item-20"></div>
+
+			<div class="item-21"></div>
+			<div class="item-22"></div>
+			<div class="item-23"></div>
+			<div class="item-24"></div>
+			<div class="item-25"></div>
+		</div>
+
+		<div class="keyboard">
+			<div class="rowf">
+				<button value="Q" onclick="entry('Q')">Q</button>
+				<button value="W" onclick="entry('W')">W</button>
+				<button value="E" onclick="entry('E')">E</button>
+				<button value="R" onclick="entry('R')">R</button>
+				<button value="T" onclick="entry('T')">T</button>
+				<button value="Y" onclick="entry('Y')">Y</button>
+				<button value="U" onclick="entry('U')">U</button>
+				<button value="I" onclick="entry('I')">I</button>
+				<button value="O" onclick="entry('O')">O</button>
+				<button value="P" onclick="entry('P')">P</button>
+			</div>
+			<div class="rows">
+				<button value="A" onclick="entry('A')">A</button>
+				<button value="S" onclick="entry('S')">S</button>
+				<button value="D" onclick="entry('D')">D</button>
+				<button value="F" onclick="entry('F')">F</button>
+				<button value="G" onclick="entry('G')">G</button>
+				<button value="H" onclick="entry('H')">H</button>
+				<button value="J" onclick="entry('J')">J</button>
+				<button value="K" onclick="entry('K')">K</button>
+				<button value="L" onclick="entry('L')">L</button>
+			</div>
+			<div class="rowt">
+				<button value="del" class="del" onclick="entry('DEL')">DEL</button>
+				<button value="Z" onclick="entry('Z')">Z</button>
+				<button value="X" onclick="entry('X')">X</button>
+				<button value="C" onclick="entry('C')">C</button>
+				<button value="V" onclick="entry('V')">V</button>
+				<button value="B" onclick="entry('B')">B</button>
+				<button value="N" onclick="entry('N')">N</button>
+				<button value="M" onclick="entry('M')">M</button>
+				<button value="Enter" class="enter" onclick="entry('ENTER')">
+					Enter
+				</button>
+			</div>
+		</div>
+	</div>
+	<div class="result">
+
+	</div>
+
+	<!-- <div class="test"></div> -->
+	<script>
+
+		//
+		var btn;
+		let count = 0;
+		let wordCheck = "";
+		let isIncluded = false;
+		let randomWord;
+
+		document.addEventListener('keydown', (event) => {
+			const key = event.key.toUpperCase();
+			console.log(key);
+			if (key === 'BACKSPACE') {
+				entry('DEL');
+			}
+			if (key >= 'A' && key <= 'Z') {
+				entry(key);
+			}
+			if (key === 'ENTER') {
+				entry('ENTER');
+			}
+
+		});
+
+
+		function entry(btn) {
+			const pickclass = `.item-${count + 1}`;
+			const pickdiv = document.querySelector(pickclass);
+			if (btn != "DEL" && btn != "ENTER") {
+				if (count < 25) {
+					pickdiv.innerText = btn;
+					wordCheck += btn;
+					count++;
+				}
+			}
+			if (btn === "ENTER") {
+				isIncluded = wordleWords.includes(wordCheck.toLowerCase());
+
+				alert(isIncluded);
+				if (isIncluded) {
+					compare(wordCheck.toLowerCase(), count)
+
+				}
+				if (wordCheck.toLowerCase() == randomWord) {
+					//document.querySelector(".result").style.scale = 1
+					document.body.style.backgroundColor = '#aeb7c6'
+					document.querySelector(".container").style.opacity = '0.5'
+					document.querySelector(".container").style.backgroundColor = '#aeb7c6'
+					document.querySelector(".result").innerText = "Congratulations ! You have guessed that right word"
+					document.querySelector(".result").style.transform = 'translate(-50%,-50%) scale(1)'
+				}
+
+				if (isIncluded) {
+					wordCheck = ""
+				}
+			}
+
+
+			if (btn == "DEL" && count > 0) {
+				if (!isIncluded) {
+					wordCheck = wordCheck.slice(0, -1)
+					count--;
+					const removeclass = `.item-${count + 1}`;
+					document.querySelector(removeclass).innerText = ""
+				}
+
+			}
+
+			if (count == 25) {
+				document.body.style.backgroundColor = '#aeb7c6'
+				document.querySelector(".container").style.opacity = '0.5'
+				document.querySelector(".container").style.backgroundColor = '#aeb7c6'
+				document.querySelector(".result").innerText = "You have failed to guess the right word.The word was " + randomWord + ".Better luck next time!!!"
+				document.querySelector(".result").style.transform = 'translate(-50%,-50%) scale(1)'
+
+			}
+
+			console.log(count);
+			console.log(wordCheck);
+
+
+		}
+		const apiUrl = `https://api.datamuse.com/words?`;
+
+
+		let wordleWords = [];
+
+		async function fetchWords() {
+			let words = [];
+			let promises = [];
+			for (let i = 97; i <= 122; i++) {
+				let letter = String.fromCharCode(i);
+				let api = `${apiUrl}sp=${letter}????&max=1000`;
+				promises.push(makeApiCall(api).then((res) => {
+					words.push(...res);
+				}));
+			}
+
+			await Promise.all(promises)
+			wordleWords = words;
+
+			randomWord = genword();
+			console.log("Random word is:", randomWord);
+		}
+
+		function genword() {
+			let randomIndex = Math.floor(Math.random() * wordleWords.length);
+			let randomWord = wordleWords[randomIndex];
+			return randomWord;
+		}
+		window.onload = () => {
+			fetchWords();
+		}
+
+
+
+		function makeApiCall(apiParam) {
+			return new Promise((resolve, reject) => {
+				fetch(apiParam)
+					.then((response) => response.json())
+					.then((data) => {
+						let resWords = data.map((item) => item.word);
+						resolve(resWords);
+					})
+					.catch((error) => {
+						console.error("Error:", error);
+					});
+			});
+		}
+
+
+
+		let compword;
+		let index;
+		let changediv;
+
+		function compare(compword, index) {
+
+			const rowStart = index - 4;
+
+			for (let k = 0; k < 5; k++) {
+
+				let changediv = document.querySelector(`.item-${rowStart + k}`);
+				if (randomWord[k] === compword[k]) {
+
+					changediv.style.backgroundColor = 'rgb(88, 212, 88)';
+				} else if (randomWord.includes(compword[k])) {
+
+					changediv.style.backgroundColor = 'rgb(193, 193, 28)';
+				} else {
+
+					changediv.style.backgroundColor = '#d3d3d3';
+				}
+			}
+		}
+
+
+
+	</script>
+</body>
+
+</html>
